@@ -1,4 +1,4 @@
-(ns day2
+(ns day02
   (:require [clojure.string :refer [split]]))
 
 (defn parse-input [input]
