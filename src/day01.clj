@@ -19,9 +19,7 @@
 (defn num-sum-increases [depths]
   (->> (sliding-windows 3 depths)
        (map #(apply + %))
-       (sliding-windows 2)
-       (filter (fn [[a b]] (> b a)))
-       count))
+       num-increases))
 
 (defn -main []
   (let [depths (read-input)]
