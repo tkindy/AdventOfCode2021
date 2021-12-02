@@ -14,3 +14,9 @@
   (is (= (day2/final-position
           [['forward 5] ['down 5] ['forward 8] ['up 3] ['down 8] ['forward 2]])
          {:x 15 :y 10})))
+
+(deftest final-position-aim
+  (is (= (day2/final-position-aim []) {:x 0 :y 0}))
+  (is (= (day2/final-position-aim
+          [['forward 5] ['down 5] ['forward 8] ['up 3] ['down 8] ['forward 2]])
+         {:x 15 :y 60})))

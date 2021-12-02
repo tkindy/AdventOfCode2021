@@ -24,6 +24,21 @@
   (let [{x :x y :y} (final-position commands)]
     (* x y)))
 
+(defn final-position-aim [commands]
+  (first
+   (reduce (fn [[{x :x y :y} aim] [direction value]]
+             (case direction
+               down [{:x x :y y} (+ aim value)]
+               up [{:x x :y y} (- aim value)]
+               forward [{:x (+ x value) :y (+ y (* aim value))} aim]))
+           [{:x 0 :y 0} 0]
+           commands)))
+
+(defn part2 [commands]
+  (let [{x :x y :y} (final-position-aim commands)]
+    (* x y)))
+
 (defn -main []
   (let [commands (read-input)]
-    (println "Part 1: " (part1 commands))))
+    (println "Part 1: " (part1 commands))
+    (println "Part 2: " (part2 commands))))
