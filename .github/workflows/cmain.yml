@@ -24,6 +24,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: Cache
+        uses: actions/cache@v2.1.7
+        with:
+          path: |
+            ~/.m2
+            ~/.gitlibs
+          key: deps-${{ hashFiles('**/deps.edn') }}
+          restore-keys: |
+            deps-
 
       - name: Setup Clojure
         uses: DeLaGuardo/setup-clojure@5042876523f30f5efcf1d6feaa48bd1498d7814f
