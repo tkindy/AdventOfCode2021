@@ -24,7 +24,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       - name: Cache
         uses: actions/cache@v2.1.7
         with:
@@ -39,6 +39,6 @@ jobs:
         uses: DeLaGuardo/setup-clojure@5042876523f30f5efcf1d6feaa48bd1498d7814f
         with:
           cli: 1.10.3.905
-          
+
       - name: Run tests
-        run: ./test-all.sh
+        run: clojure -X:test
