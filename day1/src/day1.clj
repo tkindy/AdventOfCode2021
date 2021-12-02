@@ -8,7 +8,8 @@
 (defn read-input []
   (parse-input (slurp "input")))
 
-(defn num-increases [depths])
+(defn num-increases [depths]
+  0)
 
 (defn -main []
   (let [depths (read-input)]
