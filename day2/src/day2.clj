@@ -11,5 +11,19 @@
 (defn read-input []
   (parse-input (slurp "input")))
 
+(defn final-position [commands]
+  (reduce (fn [{x :x y :y} [direction distance]]
+            (case direction
+              forward {:x (+ x distance) :y y}
+              down    {:x x :y (+ y distance)}
+              up      {:x x :y (- y distance)}))
+          {:x 0 :y 0}
+          commands))
+
+(defn part1 [commands]
+  (let [{x :x y :y} (final-position commands)]
+    (* x y)))
+
 (defn -main []
-  (println "Hello, world!"))
+  (let [commands (read-input)]
+    (println "Part 1: " (part1 commands))))
