@@ -1,10 +1,10 @@
 #!/bin/sh
 
 for dir in $(ls | grep day); do
-  pushd -q $dir
+  cd $dir
   echo "Testing $dir"
 
   clojure -X:test
 
-  popd -q
+  cd ..
 done
