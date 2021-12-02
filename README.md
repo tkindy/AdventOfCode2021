@@ -15,3 +15,9 @@ To run all the `clojure.test` unit tests:
 ```shell
 $ clj -X:test
 ```
+
+To run the unit tests for a specific day:
+
+```shell
+$ clj -X:test :nses [dayXX-test]
+```
