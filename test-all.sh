@@ -5,6 +5,7 @@ for dir in $(ls | grep day); do
   echo "Testing $dir"
 
   clojure -X:test
+  echo
 
   cd ..
 done
