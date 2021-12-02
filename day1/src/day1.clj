@@ -8,5 +8,8 @@
 (defn read-input []
   (parse-input (slurp "input")))
 
+(defn num-increases [depths])
+
 (defn -main []
-  (println "Hello, world!"))
+  (let [depths (read-input)]
+    (println "Part 1: " (num-increases depths))))
