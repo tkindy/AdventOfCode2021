@@ -8,8 +8,13 @@
 (defn read-input []
   (parse-input (slurp "input")))
 
+(defn consecutive-pairs [l]
+  (partition 2 1 l))
+
 (defn num-increases [depths]
-  0)
+  (->> (consecutive-pairs depths)
+       (filter (fn [[a b]] (> b a)))
+       count))
 
 (defn -main []
   (let [depths (read-input)]
