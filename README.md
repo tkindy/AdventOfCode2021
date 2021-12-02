@@ -20,7 +20,7 @@ To run the tests for all days:
 $ clj -X:test
 ```
 
-To run the unit tests for a specific day:
+To run the tests for a specific day:
 
 ```shell
 $ clj -X:test :nses [dayXX-test]
