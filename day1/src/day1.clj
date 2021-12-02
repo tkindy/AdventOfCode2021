@@ -8,11 +8,11 @@
 (defn read-input []
   (parse-input (slurp "input")))
 
-(defn consecutive-pairs [l]
-  (partition 2 1 l))
+(defn sliding-windows [n l]
+  (partition n 1 l))
 
 (defn num-increases [depths]
-  (->> (consecutive-pairs depths)
+  (->> (sliding-windows 2 depths)
        (filter (fn [[a b]] (> b a)))
        count))
 

@@ -2,9 +2,11 @@
   (:require day1
             [clojure.test :refer [deftest is]]))
 
-(deftest consecutive-pairs
-  (is (= (day1/consecutive-pairs [1 2 3 4])
-         [[1 2] [2 3] [3 4]])))
+(deftest sliding-windows
+  (is (= (day1/sliding-windows 2 [1 2 3 4])
+         [[1 2] [2 3] [3 4]]))
+  (is (= (day1/sliding-windows 3 [1 2 3 4])
+         [[1 2 3] [2 3 4]])))
 
 (deftest num-increases
   (is (= (day1/num-increases []) 0))
