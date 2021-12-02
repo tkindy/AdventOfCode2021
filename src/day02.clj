@@ -12,11 +12,11 @@
   (parse-input (slurp "inputs/day2")))
 
 (defn final-position [commands]
-  (reduce (fn [{x :x y :y} [direction distance]]
+  (reduce (fn [{x :x y :y :as pos} [direction distance]]
             (case direction
-              forward {:x (+ x distance) :y y}
-              down    {:x x :y (+ y distance)}
-              up      {:x x :y (- y distance)}))
+              forward (assoc pos :x (+ x distance))
+              down    (assoc pos :y (+ y distance))
+              up      (assoc pos :y (- y distance))))
           {:x 0 :y 0}
           commands))
 
@@ -26,10 +26,10 @@
 
 (defn final-position-aim [commands]
   (first
-   (reduce (fn [[{x :x y :y} aim] [direction value]]
+   (reduce (fn [[{x :x y :y :as pos} aim] [direction value]]
              (case direction
-               down [{:x x :y y} (+ aim value)]
-               up [{:x x :y y} (- aim value)]
+               down [pos (+ aim value)]
+               up [pos (- aim value)]
                forward [{:x (+ x value) :y (+ y (* aim value))} aim]))
            [{:x 0 :y 0} 0]
            commands)))
