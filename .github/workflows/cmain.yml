@@ -33,5 +33,5 @@ jobs:
       - name: Run tests
         run: |
           pushd day1
-          clj -X:test
+          clojure -X:test
           popd
