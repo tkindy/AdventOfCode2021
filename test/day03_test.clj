@@ -26,3 +26,16 @@
 
 (deftest part1
   (is (= (day03/part1 example-numbers) 198)))
+
+(deftest filter1
+  (is (= (day03/filter1 example-numbers 0 max-key 1)
+         [[1 1 1 1 0]
+          [1 0 1 1 0]
+          [1 0 1 1 1]
+          [1 0 1 0 1]
+          [1 1 1 0 0]
+          [1 0 0 0 0]
+          [1 1 0 0 1]])))
+
+(deftest part2
+  (is (= (day03/part2 example-numbers) 230)))
