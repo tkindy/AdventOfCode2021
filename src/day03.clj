@@ -70,13 +70,13 @@
             numbers)))
 
 (defn filter-nums [numbers selector tiebreaker]
-  (let [length (count (first numbers))]
-    (bits->decimal
-     (first
-      (reduce (fn [nums i]
-                (filter1 nums i selector tiebreaker))
-              numbers
-              (range length))))))
+  (->> (count (first numbers))
+       range
+       (reduce (fn [nums i]
+                 (filter1 nums i selector tiebreaker))
+               numbers)
+       first
+       bits->decimal))
 
 (defn part2 [numbers]
   (let [oxygen (filter-nums numbers max-key 1)
