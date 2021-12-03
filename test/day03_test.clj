@@ -19,11 +19,6 @@
 (deftest parse-input
   (is (= (day03/parse-input example-input) example-numbers)))
 
-(deftest most-common
-  (is (= (day03/most-common [1]) 1))
-  (is (= (day03/most-common [0 1 0]) 0))
-  (is (= (day03/most-common [0 1 0 0 1 1 0]) 0)))
-
 (deftest part1
   (is (= (day03/part1 example-numbers) 198)))
 

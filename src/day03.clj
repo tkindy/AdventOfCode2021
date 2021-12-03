@@ -16,7 +16,7 @@
 (defn max-count [counts]
   (key (apply max-key val counts)))
 
-(defn bit-winner [bits selector tiebreaker]
+(defn bit-winner [selector tiebreaker bits]
   (let [{zeroes 0, ones 1, :as counts}
         (reduce (fn [counts digit]
                   (update counts digit
@@ -27,24 +27,10 @@
       tiebreaker
       (key (apply selector val counts)))))
 
-(defn most-common
-  ([digits] (most-common digits 0))
-  ([digits tiebreaker]
-   (let [{zeroes 0, ones 1, :or {zeroes 0 ones 0}}
-         (reduce (fn [counts digit]
-                   (update counts digit
-                           (fn [old] (if (nil? old) 1 (+ old 1)))))
-                 {}
-                 digits)]
-     (cond
-       (> zeroes ones) 0
-       (< zeroes ones) 1
-       :else tiebreaker))))
-
 (defn most-common-digit [numbers i]
   (->> numbers
        (get-digits i)
-       most-common))
+       (bit-winner max-key 0)))
 
 (defn most-common-digits [numbers]
   (let [length (count (first numbers))]
@@ -65,7 +51,7 @@
 
 (defn filter1 [numbers i selector tiebreaker]
   (let [bits (get-digits i numbers)
-        winner (bit-winner bits selector tiebreaker)]
+        winner (bit-winner selector tiebreaker bits)]
     (filter (fn [number] (= (nth number i) winner))
             numbers)))
 
