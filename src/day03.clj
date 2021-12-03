@@ -2,9 +2,10 @@
   (:require [clojure.string :refer [split]]))
 
 (defn parse-input [input]
-  (map (fn [line]
-         (map #(Integer/parseInt (str %)) line))
-       (split input #"\n")))
+  (->> (split input #"\n")
+       (map (fn [line]
+              (map #(Integer/parseInt (str %)) line)))
+       (into [])))
 
 (defn read-input []
   (parse-input (slurp "inputs/day3")))
