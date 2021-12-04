@@ -66,20 +66,22 @@
        (range (count (first board)))))
 
 (defn winner? [board]
-  (->> (concat (rows board) (columns board))
-       (some #(every? :marked %))))
+  (let [lines (concat (rows board) (columns board))]
+    (and (some #(every? :marked %) lines) board)))
 
-(defn first-winner [{:keys [draws boards]}]
-  (reduce (fn [boards draw]
-            (let [boards (mark-boards boards draw)
-                  winner (->> boards
-                              (filter winner?)
-                              first)]
-              (if winner
-                (reduced [winner draw])
-                boards)))
-          boards
-          draws))
+(defn play-game [{:keys [draws boards]}]
+  (reductions (fn [[boards _ _] draw]
+                (let [marked (mark-boards boards draw)
+                      winner (some winner? marked)
+                      not-yet-winners (filter (comp not winner?) marked)]
+                  [not-yet-winners draw winner]))
+              [boards nil nil]
+              draws))
+
+(defn first-winner [state]
+  (->> (play-game state)
+       (some (fn [[_ last-draw last-winner]]
+               (and last-winner [last-winner last-draw])))))
 
 (defn sum-unmarked [board]
   (->> board
@@ -94,16 +96,10 @@
 (defn part1 [state]
   (score (first-winner state)))
 
-(defn last-winner [{:keys [draws boards]}]
-  (reduce (fn [boards draw]
-            (let [boards (mark-boards boards draw)
-                  not-yet-winners (->> boards
-                                       (filter (comp not winner?)))]
-              (if (empty? not-yet-winners)
-               (reduced [(first boards) draw])
-                not-yet-winners)))
-          boards
-          draws))
+(defn last-winner [{:keys [draws boards], :as state}]
+  (->> (play-game state)
+       (some (fn [[boards last-draw last-winner]]
+               (and (empty? boards) [last-winner last-draw])))))
 
 (defn part2 [state]
   (score (last-winner state)))

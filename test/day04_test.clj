@@ -53,6 +53,20 @@
   (is (= (day04/parse-input example-input)
          example-parsed)))
 
+(deftest first-winner
+  (is (= (day04/first-winner {:draws '(1 2 3 4 5)
+                              :boards (map day04/prep-board
+                                           '([[1 2 3]
+                                              [2 3 4]
+                                              [3 4 5]]
+                                             [[7 8 9]
+                                              [7 8 9]
+                                              [7 8 9]]))})
+         [[[{:value 1, :marked true} {:value 2, :marked true} {:value 3, :marked true}]
+           [{:value 2, :marked true} {:value 3, :marked true} {:value 4, :marked false}]
+           [{:value 3, :marked true} {:value 4, :marked false} {:value 5, :marked false}]]
+          3])))
+
 (deftest part1
   (is (= (day04/part1 example-state) 4512)))
 
