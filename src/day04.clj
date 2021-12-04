@@ -44,9 +44,42 @@
 (defn prep-boards [{boards :boards, :as state}]
   (assoc state :boards (map prep-board boards)))
 
-;; TODO
+(defn mark-board [board draw]
+  (map (fn [row]
+         (map (fn [{:keys [value marked], :as spot}]
+                (let [marked (or marked (= value draw))]
+                  (assoc spot :marked marked)))
+              row))
+       board))
+
+(defn mark-boards [boards draw]
+  (map #(mark-board % draw) boards))
+
+(defn rows [board]
+  board)
+
+(defn columns [board]
+  (map (fn [col]
+         (map (fn [row]
+                (nth row col))
+              board))
+       (range (count (first board)))))
+
+(defn winner? [board]
+  (->> (concat (rows board) (columns board))
+       (some #(every? :marked %))))
+
 (defn first-winner [{:keys [draws boards]}]
-  [(first boards) (first draws)])
+  (reduce (fn [boards draw]
+            (let [boards (mark-boards boards draw)
+                  winner (->> boards
+                              (filter winner?)
+                              first)]
+              (if winner
+                (reduced [winner draw])
+                boards)))
+          boards
+          draws))
 
 (defn sum-unmarked [board]
   (->> board
