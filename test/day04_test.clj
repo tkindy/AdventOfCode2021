@@ -22,6 +22,10 @@
     [18  8 23 26 20]
     [22 11 13  6  5]
     [2  0 12  3  7]]])
+(def example-parsed
+  {:draws '(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)
+   :boards example-boards})
+(def example-state (day04/prep-boards example-parsed))
 
 (deftest split-board-lines
   (is (= (day04/split-board-lines (s/split-lines example-input))
@@ -47,5 +51,7 @@
 
 (deftest parse-input
   (is (= (day04/parse-input example-input)
-         {:draws '(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)
-          :boards example-boards})))
+         example-parsed)))
+
+(deftest part1
+  (is (= (day04/part1 example-state) 4512)))

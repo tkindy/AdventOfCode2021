@@ -34,4 +34,32 @@
 (defn read-input []
   (parse-input (slurp "inputs/day4")))
 
-(defn -main [])
+(defn prep-board [board]
+  (mapv (fn [row]
+          (mapv (fn [value]
+                  {:value value, :marked false})
+                row))
+        board))
+
+(defn prep-boards [{boards :boards, :as state}]
+  (assoc state :boards (map prep-board boards)))
+
+;; TODO
+(defn first-winner [{:keys [draws boards]}]
+  [(first boards) (first draws)])
+
+(defn sum-unmarked [board]
+  (->> board
+       flatten
+       (filter (comp not :marked))
+       (map :value)
+       (apply +)))
+
+(defn part1 [state]
+  (let [[winner last-draw] (first-winner state)]
+    (* (sum-unmarked winner) last-draw)))
+
+(defn -main []
+  (let [state (-> (read-input)
+                  prep-boards)]
+    (println "Part 1: " (part1 state))))
