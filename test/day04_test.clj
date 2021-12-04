@@ -55,3 +55,6 @@
 
 (deftest part1
   (is (= (day04/part1 example-state) 4512)))
+
+(deftest part2
+  (is (= (day04/part2 example-state) 1924)))

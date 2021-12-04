@@ -88,11 +88,28 @@
        (map :value)
        (apply +)))
 
+(defn score [[winner last-draw]]
+  (* (sum-unmarked winner) last-draw))
+
 (defn part1 [state]
-  (let [[winner last-draw] (first-winner state)]
-    (* (sum-unmarked winner) last-draw)))
+  (score (first-winner state)))
+
+(defn last-winner [{:keys [draws boards]}]
+  (reduce (fn [boards draw]
+            (let [boards (mark-boards boards draw)
+                  not-yet-winners (->> boards
+                                       (filter (comp not winner?)))]
+              (if (empty? not-yet-winners)
+               (reduced [(first boards) draw])
+                not-yet-winners)))
+          boards
+          draws))
+
+(defn part2 [state]
+  (score (last-winner state)))
 
 (defn -main []
   (let [state (-> (read-input)
                   prep-boards)]
-    (println "Part 1: " (part1 state))))
+    (println "Part 1: " (part1 state))
+    (println "Part 2: " (part2 state))))
