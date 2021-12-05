@@ -36,9 +36,8 @@
   (let [dx (delta x1 x2)
         dy (delta y1 y2)
         num-points (max (Math/abs (- x1 x2)) (Math/abs (- y1 y2)))]
-    (->> (range (inc num-points))
-         (map (fn [i] [(+ x1 (* dx i))
-                       (+ y1 (* dy i))])))))
+    (map (fn [i] [(+ x1 (* dx i)) (+ y1 (* dy i))])
+         (range (inc num-points)))))
 
 (defn build-hit-map1 [line]
   (->> line
