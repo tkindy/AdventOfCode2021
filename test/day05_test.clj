@@ -23,3 +23,6 @@
 
 (deftest part1
   (is (= (d/part1 example-parsed) 5)))
+
+(deftest part2
+  (is (= (d/part2 example-parsed) 12)))
