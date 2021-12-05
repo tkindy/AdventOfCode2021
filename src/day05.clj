@@ -26,17 +26,15 @@
 (defn between-inclusive [a b]
   (range (min a b) (inc (max a b))))
 
+(defn delta [a b]
+  (cond
+    (< a b)  1
+    (> a b) -1
+    :else    0))
+
 (defn points [{:keys [x1 y1 x2 y2]}]
-  (let [dx
-        (cond
-          (< x1 x2)  1
-          (> x1 x2) -1
-          :else      0)
-        dy
-        (cond
-          (< y1 y2)  1
-          (> y1 y2) -1
-          :else      0)
+  (let [dx (delta x1 x2)
+        dy (delta y1 y2)
         num-points (max (Math/abs (- x1 x2)) (Math/abs (- y1 y2)))]
     (->> (range (inc num-points))
          (map (fn [i] [(+ x1 (* dx i))
