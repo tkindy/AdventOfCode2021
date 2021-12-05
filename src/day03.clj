@@ -8,7 +8,7 @@
        (into [])))
 
 (defn read-input []
-  (parse-input (slurp "inputs/day3")))
+  (parse-input (slurp "inputs/day03")))
 
 (defn get-digits [i numbers]
   (map #(nth % i) numbers))

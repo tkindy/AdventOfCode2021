@@ -18,7 +18,7 @@
        (map parse-line)))
 
 (defn read-input []
-  (parse-input (slurp "inputs/day5")))
+  (parse-input (slurp "inputs/day05")))
 
 (defn straight? [{:keys [x1 y1 x2 y2]}]
   (or (= x1 x2) (= y1 y2)))
