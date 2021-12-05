@@ -27,17 +27,20 @@
   (range (min a b) (inc (max a b))))
 
 (defn points [{:keys [x1 y1 x2 y2]}]
-  (cond
-    (= x1 x2) (map (fn [y] [x1 y]) (between-inclusive y1 y2))
-    (= y1 y2) (map (fn [x] [x y1]) (between-inclusive x1 x2))
-    (= (Math/abs (- x1 x2)) (Math/abs (- y1 y2)))
-    (let [[[x1 y1] [x2 y2]]
-          (if (< x1 x2)
-            [[x1 y1] [x2 y2]]
-            [[x2 y2] [x1 y1]])]
-      (map (fn [i] [(+ x1 i) (+ y1 i)])
-           (range (inc (- x2 x1)))))
-    :else (throw (new IllegalArgumentException))))
+  (let [dx
+        (cond
+          (< x1 x2)  1
+          (> x1 x2) -1
+          :else      0)
+        dy
+        (cond
+          (< y1 y2)  1
+          (> y1 y2) -1
+          :else      0)
+        num-points (max (Math/abs (- x1 x2)) (Math/abs (- y1 y2)))]
+    (->> (range (inc num-points))
+         (map (fn [i] [(+ x1 (* dx i))
+                       (+ y1 (* dy i))])))))
 
 (defn build-hit-map1 [line]
   (->> line

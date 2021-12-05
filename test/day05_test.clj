@@ -21,6 +21,10 @@
          [{:x1 0, :y1 9, :x2 5, :y2 9}]))
   (is (= (d/parse-input example-input) example-parsed)))
 
+(deftest points
+  (is (= (d/points {:x1 0, :y1 9, :x2 5, :y2 9})
+         '([0 9] [1 9] [2 9] [3 9] [4 9] [5 9]))))
+
 (deftest part1
   (is (= (d/part1 example-parsed) 5)))
 
