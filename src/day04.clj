@@ -96,7 +96,7 @@
 (defn part1 [state]
   (score (first-winner state)))
 
-(defn last-winner [{:keys [draws boards], :as state}]
+(defn last-winner [state]
   (->> (play-game state)
        (some (fn [[boards last-draw last-winner]]
                (and (empty? boards) [last-winner last-draw])))))
