@@ -14,7 +14,7 @@ $ clj -M -m dayXX
 
 ## Testing
 
-The unit tests use the standard [clojure.test] and are run using Cognitect's [test-runner].
+The unit tests use the standard [clojure.test] library and are run using Cognitect's [test-runner].
 
 To run the tests for all days:
 
