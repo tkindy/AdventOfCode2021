@@ -20,3 +20,6 @@
   (is (= (d/parse-input "0,9 -> 5,9")
          [{:x1 0, :y1 9, :x2 5, :y2 9}]))
   (is (= (d/parse-input example-input) example-parsed)))
+
+(deftest part1
+  (is (= (d/part1 example-parsed) 5)))

@@ -20,4 +20,40 @@
 (defn read-input []
   (parse-input (slurp "inputs/day5")))
 
-(defn -main [])
+(defn straight? [{:keys [x1 y1 x2 y2]}]
+  (or (= x1 x2) (= y1 y2)))
+
+(defn between-inclusive [a b]
+  (range (min a b) (inc (max a b))))
+
+;; only works for straight lines right now
+(defn points [{:keys [x1 y1 x2 y2]}]
+  (if (= x1 x2)
+    (map (fn [y] [x1 y]) (between-inclusive y1 y2))
+    (map (fn [x] [x y1]) (between-inclusive x1 x2))))
+
+(defn build-hit-map1 [line]
+  (->> line
+       points
+       (reduce (fn [hit-map point] (assoc hit-map point 1))
+               {})))
+
+(defn build-hit-map [lines]
+  (->> lines
+       (map build-hit-map1)
+       (apply merge-with +)))
+
+(defn count-intersections [lines]
+  (->> lines
+       build-hit-map
+       (filter (fn [[_ hits]] (>= hits 2)))
+       count))
+
+(defn part1 [lines]
+  (->> lines
+       (filter straight?)
+       count-intersections))
+
+(defn -main []
+  (let [lines (read-input)]
+    (println "Part 1: " (part1 lines))))
