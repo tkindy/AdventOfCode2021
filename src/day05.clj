@@ -23,9 +23,6 @@
 (defn straight? [{:keys [x1 y1 x2 y2]}]
   (or (= x1 x2) (= y1 y2)))
 
-(defn between-inclusive [a b]
-  (range (min a b) (inc (max a b))))
-
 (defn delta [a b]
   (cond
     (< a b)  1
