@@ -3,7 +3,7 @@
             [clojure.test :refer [deftest is]]
             [clojure.string :as s]))
 
-(def example-input (slurp "examples/day04"))
+(def example-input (slurp "examples/day04.txt"))
 (def example-boards
   [[[22 13 17 11  0]
     [8  2 23  4 24]

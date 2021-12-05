@@ -2,7 +2,7 @@
   (:require [day05 :as d]
             [clojure.test :refer [deftest is]]))
 
-(def example-input (slurp "examples/day05"))
+(def example-input (slurp "examples/day05.txt"))
 (def example-parsed
   [{:x1 0, :y1 9, :x2 5, :y2 9}
    {:x1 8, :y1 0, :x2 0, :y2 8}

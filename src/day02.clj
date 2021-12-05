@@ -9,7 +9,7 @@
          lines)))
 
 (defn read-input []
-  (parse-input (slurp "inputs/day02")))
+  (parse-input (slurp "inputs/day02.txt")))
 
 (defn final-position [commands]
   (reduce (fn [{x :x, y :y, :as pos} [direction distance]]

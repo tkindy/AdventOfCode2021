@@ -6,7 +6,7 @@
        (map #(Integer/parseInt %))))
 
 (defn read-input []
-  (parse-input (slurp "inputs/day01")))
+  (parse-input (slurp "inputs/day01.txt")))
 
 (defn sliding-windows [n l]
   (partition n 1 l))

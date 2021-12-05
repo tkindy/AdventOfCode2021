@@ -32,7 +32,7 @@
      :boards (parse-boards lines)}))
 
 (defn read-input []
-  (parse-input (slurp "inputs/day04")))
+  (parse-input (slurp "inputs/day04.txt")))
 
 (defn prep-board [board]
   (mapv (fn [row]
