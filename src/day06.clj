@@ -13,12 +13,13 @@
 (defn simulate1 [timers]
   (reduce
    (fn [timers [timer count]]
-     (let [add #(+ (or % 0) count)]
+     (let [add-count
+           (fn [timers timer] (update timers timer #(+ (or % 0) count)))]
        (if (= timer 0)
          (-> timers
-             (update 8 add)
-             (update 6 add))
-         (update timers (- timer 1) add))))
+             (add-count 8)
+             (add-count 6))
+         (add-count timers (- timer 1)))))
    {}
    timers))
 
