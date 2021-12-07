@@ -10,21 +10,30 @@
 (defn read-input []
   (parse-input (slurp "inputs/day07.txt")))
 
-(defn fuel-cost [locs pos]
+(def part1-cost-fn identity)
+
+(defn fuel-cost
+  [locs pos cost-fn]
   (->> locs
-       (map (fn [[loc count]] (* (Math/abs (- loc pos)) count)))
+       (map (fn [[loc count]] (* (cost-fn (Math/abs (- loc pos))) count)))
        (apply +)))
 
-(defn best-position [locs]
+(defn part1-fuel-cost [locs pos]
+  (fuel-cost locs pos part1-cost-fn))
+
+(defn best-position [locs cost-fn]
   (let [unique-locs (map key locs)
         loc-range (range (apply min unique-locs)
                          (inc (apply max unique-locs)))]
     (->> loc-range
-         (map (fn [loc] [loc (fuel-cost locs loc)]))
+         (map (fn [loc] [loc (fuel-cost locs loc cost-fn)]))
          (apply min-key second))))
 
+(defn part1-best-position [locs]
+  (best-position locs part1-cost-fn))
+
 (defn part1 [locs]
-  (second (best-position locs)))
+  (second (part1-best-position locs)))
 
 (defn -main []
   (let [locs (read-input)]

@@ -8,14 +8,15 @@
 (deftest parse-input
   (is (= (d/parse-input example-input) example)))
 
-(deftest fuel-cost
-  (is (= (d/fuel-cost example 1) 41))
-  (is (= (d/fuel-cost example 2) 37))
-  (is (= (d/fuel-cost example 3) 39))
-  (is (= (d/fuel-cost example 10) 71)))
 
-(deftest best-position
-  (is (= (d/best-position example) [2 37])))
+(deftest part1-fuel-cost
+  (is (= (d/part1-fuel-cost example 1) 41))
+  (is (= (d/part1-fuel-cost example 2) 37))
+  (is (= (d/part1-fuel-cost example 3) 39))
+  (is (= (d/part1-fuel-cost example 10) 71)))
+
+(deftest part1-best-position
+  (is (= (d/part1-best-position example) [2 37])))
 
 (deftest part1
   (is (= (d/part1 example) 37)))
