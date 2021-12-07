@@ -8,6 +8,12 @@
 (deftest parse-input
   (is (= (d/parse-input example-input) example)))
 
+(deftest part2-cost-fn
+  (is (= (d/part2-cost-fn 0) 0))
+  (is (= (d/part2-cost-fn 1) 1))
+  (is (= (d/part2-cost-fn 2) 3))
+  (is (= (d/part2-cost-fn 3) 6))
+  (is (= (d/part2-cost-fn 4) 10)))
 
 (deftest part1-fuel-cost
   (is (= (d/part1-fuel-cost example 1) 41))
@@ -20,3 +26,6 @@
 
 (deftest part1
   (is (= (d/part1 example) 37)))
+
+(deftest part2
+  (is (= (d/part2 example) 168)))

@@ -12,6 +12,11 @@
 
 (def part1-cost-fn identity)
 
+;; Formula for the nth triangular number
+;; https://math.stackexchange.com/a/60581
+(defn part2-cost-fn [distance]
+  (/ (* distance (inc distance)) 2))
+
 (defn fuel-cost
   [locs pos cost-fn]
   (->> locs
@@ -32,9 +37,16 @@
 (defn part1-best-position [locs]
   (best-position locs part1-cost-fn))
 
+(defn part2-best-position [locs]
+  (best-position locs part2-cost-fn))
+
 (defn part1 [locs]
   (second (part1-best-position locs)))
 
+(defn part2 [locs]
+  (second (part2-best-position locs)))
+
 (defn -main []
   (let [locs (read-input)]
-    (println "Part 1: " (part1 locs))))
+    (println "Part 1: " (part1 locs))
+    (println "Part 2: " (part2 locs))))
