@@ -15,7 +15,7 @@
   (is (= (d/fuel-cost example 10) 71)))
 
 (deftest best-position
-  (is (= (d/best-position example) 2)))
+  (is (= (d/best-position example) [2 37])))
 
 (deftest part1
   (is (= (d/part1 example) 37)))

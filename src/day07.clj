@@ -16,14 +16,15 @@
        (apply +)))
 
 (defn best-position [locs]
-  (let [unique-locs (map key locs)]
-    (apply min-key
-           #(fuel-cost locs %)
-           (range (apply min unique-locs)
-                  (inc (apply max unique-locs))))))
+  (let [unique-locs (map key locs)
+        loc-range (range (apply min unique-locs)
+                         (inc (apply max unique-locs)))]
+    (->> loc-range
+         (map (fn [loc] [loc (fuel-cost locs loc)]))
+         (apply min-key second))))
 
 (defn part1 [locs]
-  (fuel-cost locs (best-position locs)))
+  (second (best-position locs)))
 
 (defn -main []
   (let [locs (read-input)]
