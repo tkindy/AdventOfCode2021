@@ -4,6 +4,21 @@
 
 (def example-input (slurp "examples/day08.txt"))
 (def example (d/parse-input example-input))
+(def example2-input "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
+(def example2 '({:signals #{#{a c e d g f b}
+                            #{c d f b e}
+                            #{g c d f a}
+                            #{f b c a d}
+                            #{d a b}
+                            #{c e f a b d}
+                            #{c d f g e b}
+                            #{e a f b}
+                            #{c a g e d b}
+                            #{a b}}
+                 :outputs [#{c d f e b}
+                           #{f c a d b}
+                           #{c d f e b}
+                           #{c d b a f}]}))
 
 (deftest parse-input
   (is (= (first example) {:signals #{#{'b 'e}
@@ -32,3 +47,7 @@
 
 (deftest part1
   (is (= (d/part1 example) 26)))
+
+(deftest part2
+  (is (= (d/part2 example2) 5353))
+  (is (= (d/part2 example) 61229)))

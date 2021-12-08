@@ -45,6 +45,9 @@
        count-easy-digits-rows
        (apply +)))
 
+(defn part2 [notes]
+  0)
+
 (defn -main []
   (let [notes (read-input)]
     (println "Part 1: " (part1 notes))))
