@@ -13,7 +13,7 @@
   (is (= (d/parse-input example-input) example)))
 
 (deftest low-points
-  (is (= (d/low-points example) '(5 5 0 1))))
+  (is (= (d/low-points example) #{[1 0] [9 0] [2 2] [6 4]})))
 
 (deftest part1
   (is (= (d/part1 example) 15)))
