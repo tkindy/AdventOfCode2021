@@ -34,25 +34,26 @@
       (safe-nth y)
       (safe-nth x)))
 
+(defn low-points-row [heightmap y]
+  (let [row (nth heightmap y)]
+    (reduce
+     (fn [low-points x]
+       (let [height (nth row x)
+             neighbors (->> (neighbors [x y])
+                            (map (fn [neighbor] (get-height heightmap neighbor)))
+                            (filter (comp not nil?)))]
+         (if (low-point? height neighbors)
+           (conj low-points [x y])
+           low-points)))
+     #{}
+     (range (count row)))))
+
 (defn low-points [heightmap]
-  (let [points
-        (reduce
-         (fn [low-points y]
-           (let [row (nth heightmap y)]
-             (reduce
-              (fn [low-points x]
-                (let [height (nth row x)
-                      neighbors (->> (neighbors [x y])
-                                     (map (fn [neighbor] (get-height heightmap neighbor)))
-                                     (filter (comp not nil?)))]
-                  (if (low-point? height neighbors)
-                    (conj low-points [x y])
-                    low-points)))
-              low-points
-              (range (count row)))))
-         '()
-         (range (count heightmap)))]
-    (set points)))
+  (->> heightmap
+       count
+       range
+       (map (fn [y] (low-points-row heightmap y)))
+       (apply set/union)))
 
 (defn height->risk [height]
   (inc height))
