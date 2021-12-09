@@ -11,3 +11,9 @@
 
 (deftest parse-input
   (is (= (d/parse-input example-input) example)))
+
+(deftest low-points
+  (is (= (d/low-points example) '(5 5 0 1))))
+
+(deftest part1
+  (is (= (d/part1 example) 15)))
