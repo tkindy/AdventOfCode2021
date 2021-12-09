@@ -48,6 +48,13 @@
 (deftest part1
   (is (= (d/part1 example) 26)))
 
+(deftest process-easy-digit
+  (is (= (d/process-easy-digit (:signals (first example2))
+                               d/init-segment-candidates
+                               1)
+         '#{a d/segment-set
+            b ˜})))
+
 (deftest part2
   (is (= (d/part2 example2) 5353))
   (is (= (d/part2 example) 61229)))
