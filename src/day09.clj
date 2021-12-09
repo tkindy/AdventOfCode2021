@@ -60,6 +60,10 @@
        (map height->risk)
        (apply +)))
 
+(defn part2 [heightmap]
+  0)
+
 (defn -main []
   (let [heightmap (read-input)]
-    (println "Part 1: " (part1 heightmap))))
+    (println "Part 1: " (part1 heightmap))
+    (println "Part 2: " (part2 heightmap))))
