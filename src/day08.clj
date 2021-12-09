@@ -82,22 +82,6 @@
                     common-components)]))
        (into {})))
 
-(defn process-easy-digit [signals segment-candidates digit]
-  (let [digit-segs (digits digit)
-        signal (->> signals
-                    (filter #(= (count digit-segs) (count %)))
-                    first)]
-    (reduce (fn [segment-candidates signal-piece]
-              (assoc segment-candidates signal-piece digit-segs))
-            segment-candidates
-            signal)))
-
-(defn process-easy-digits [{:keys [signals]} segment-candidates]
-  (reduce (fn [segment-candidates digit]
-            (process-easy-digit signals segment-candidates digit))
-          segment-candidates
-          '(1 4 7 8)))
-
 (defn common-components [signals]
   (apply set/intersection signals))
 

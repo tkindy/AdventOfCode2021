@@ -49,13 +49,6 @@
 (deftest part1
   (is (= (d/part1 example) 26)))
 
-(deftest process-easy-digit
-  (is (= (d/process-easy-digit (:signals (first example2))
-                               d/init-segment-candidates
-                               1)
-         '#{a d/segment-set
-            b ˜})))
-
 (deftest find-segment-mapping
   (is (= (d/find-segment-mapping (:signals (first example2)))
          example2-signal-map)))
