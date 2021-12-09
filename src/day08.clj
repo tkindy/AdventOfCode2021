@@ -63,6 +63,8 @@
    7 '#{a c f}
    8 '#{a b c d e f g}
    9 '#{a b c d f g}})
+(def digits-by-num-segments
+  (group-by (comp count digits) (keys digits)))
 
 (defn process-easy-digit [signals segment-candidates digit]
   (let [digit-segs (digits digit)
