@@ -63,7 +63,6 @@
   (let [height (get-height heightmap point)]
     (and height (< height 9))))
 
-;; TODO
 (defn fill-basin [heightmap low-point]
   (loop [basin #{}
          frontier #{low-point}
