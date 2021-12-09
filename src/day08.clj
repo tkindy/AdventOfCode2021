@@ -140,4 +140,5 @@
 
 (defn -main []
   (let [notes (read-input)]
-    (println "Part 1: " (part1 notes))))
+    (println "Part 1: " (part1 notes))
+    (println "Part 2: " (part2 notes))))
