@@ -60,8 +60,21 @@
        (map height->risk)
        (apply +)))
 
+;; TODO
+(defn fill-basin [low-point]
+  #{})
+
+(defn fill-basins [low-points]
+  (map fill-basin low-points))
+
 (defn part2 [heightmap]
-  0)
+  (let [low-points (low-points heightmap)
+        basins (fill-basins low-points)]
+    (->> basins
+         (sort-by #(* -1 (count %)))
+         (take 3)
+         (map count)
+         (apply *))))
 
 (defn -main []
   (let [heightmap (read-input)]
