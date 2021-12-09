@@ -19,9 +19,6 @@
     (nth coll n)
     nil))
 
-(defn low-point? [height neighbors]
-  (< height (apply min neighbors)))
-
 (defn neighbors [[x y]]
   (set (list [(dec x) y] ; left
              [(inc x) y] ; right
@@ -34,19 +31,20 @@
       (safe-nth y)
       (safe-nth x)))
 
+(defn low-point? [point heightmap]
+  (let [height (get-height heightmap point)
+        neighbors (->> (neighbors point)
+                       (map (fn [neighbor] (get-height heightmap neighbor)))
+                       (filter (comp not nil?)))]
+    (< height (apply min neighbors))))
+
 (defn low-points-row [heightmap y]
-  (let [row (nth heightmap y)]
-    (reduce
-     (fn [low-points x]
-       (let [height (nth row x)
-             neighbors (->> (neighbors [x y])
-                            (map (fn [neighbor] (get-height heightmap neighbor)))
-                            (filter (comp not nil?)))]
-         (if (low-point? height neighbors)
-           (conj low-points [x y])
-           low-points)))
-     #{}
-     (range (count row)))))
+  (->> (nth heightmap y)
+       count
+       range
+       (filter (fn [x] (low-point? [x y] heightmap)))
+       (map (fn [x] [x y]))
+       set))
 
 (defn low-points [heightmap]
   (->> heightmap
