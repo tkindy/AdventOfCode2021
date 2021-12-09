@@ -14,6 +14,11 @@
 (defn read-input []
   (parse-input (slurp "inputs/day09.txt")))
 
+(defn points [heightmap]
+  (for [y (range (count heightmap))
+        x (range (count (first heightmap)))]
+    [x y]))
+
 (defn safe-nth [coll n]
   (if (< -1 n (count coll))
     (nth coll n)
@@ -38,20 +43,11 @@
                        (filter (comp not nil?)))]
     (< height (apply min neighbors))))
 
-(defn low-points-row [heightmap y]
-  (->> (nth heightmap y)
-       count
-       range
-       (filter (fn [x] (low-point? [x y] heightmap)))
-       (map (fn [x] [x y]))
-       set))
-
 (defn low-points [heightmap]
   (->> heightmap
-       count
-       range
-       (map (fn [y] (low-points-row heightmap y)))
-       (apply set/union)))
+       points
+       (filter (fn [point] (low-point? point heightmap)))
+       set))
 
 (defn height->risk [height]
   (inc height))
