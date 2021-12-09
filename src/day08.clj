@@ -82,9 +82,6 @@
                     common-components)]))
        (into {})))
 
-(defn common-components [signals]
-  (apply set/intersection signals))
-
 (defn remove-solved [segment-candidates solved]
   (let [solved-segment (first (segment-candidates solved))]
     (->> segment-candidates
