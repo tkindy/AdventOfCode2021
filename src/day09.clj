@@ -1,5 +1,6 @@
 (ns day09
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.set :as set]))
 
 (defn parse-line [line]
   (mapv #(Integer/parseInt (str %)) line))
@@ -21,6 +22,18 @@
 (defn low-point? [height neighbors]
   (< height (apply min neighbors)))
 
+(defn neighbors [[x y]]
+  (set (list [(dec x) y] ; left
+             [(inc x) y] ; right
+             [x (dec y)] ; up
+             [x (inc y)] ; down
+             )))
+
+(defn get-height [heightmap [x y]]
+  (-> heightmap
+      (safe-nth y)
+      (safe-nth x)))
+
 (defn low-points [heightmap]
   (let [points
         (reduce
@@ -29,13 +42,9 @@
              (reduce
               (fn [low-points x]
                 (let [height (nth row x)
-                      prev-row (safe-nth heightmap (dec y))
-                      next-row (safe-nth heightmap (inc y))
-                      up (nth prev-row x)
-                      down (nth next-row x)
-                      left (safe-nth row (dec x))
-                      right (safe-nth row (inc x))
-                      neighbors (filter (comp not nil?) (list up down left right))]
+                      neighbors (->> (neighbors [x y])
+                                     (map (fn [neighbor] (get-height heightmap neighbor)))
+                                     (filter (comp not nil?)))]
                   (if (low-point? height neighbors)
                     (conj low-points [x y])
                     low-points)))
@@ -44,11 +53,6 @@
          '()
          (range (count heightmap)))]
     (set points)))
-
-(defn get-height [heightmap [x y]]
-  (-> heightmap
-      (nth y)
-      (nth x)))
 
 (defn height->risk [height]
   (inc height))
@@ -60,16 +64,37 @@
        (map height->risk)
        (apply +)))
 
-;; TODO
-(defn fill-basin [low-point]
-  #{})
+(defn basinable? [heightmap point]
+  (let [height (get-height heightmap point)]
+    (and height (< height 9))))
 
-(defn fill-basins [low-points]
-  (map fill-basin low-points))
+;; TODO
+(defn fill-basin [heightmap low-point]
+  (loop [basin #{}
+         frontier #{low-point}
+         seen #{}]
+    (if (empty? frontier)
+      basin
+      (let [point (first frontier)
+            seen (conj seen point)
+            basin (if (basinable? heightmap point)
+                    (conj basin point)
+                    basin)
+            frontier (disj frontier point)]
+        (if (basinable? heightmap point)
+          (recur (conj basin point)
+                 (set/union frontier
+                            (set/difference (neighbors point) seen))
+                 seen)
+          (recur basin frontier seen))))))
+
+(defn fill-basins [heightmap low-points]
+  (map (fn [low-point] (fill-basin heightmap low-point))
+       low-points))
 
 (defn part2 [heightmap]
   (let [low-points (low-points heightmap)
-        basins (fill-basins low-points)]
+        basins (fill-basins heightmap low-points)]
     (->> basins
          (sort-by #(* -1 (count %)))
          (take 3)
