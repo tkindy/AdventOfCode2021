@@ -19,6 +19,7 @@
                            #{f c a d b}
                            #{c d f e b}
                            #{c d b a f}]}))
+(def example2-signal-map '{a c, e b, c g, g e, b f, d a, f d})
 
 (deftest parse-input
   (is (= (first example) {:signals #{#{'b 'e}
@@ -54,6 +55,14 @@
                                1)
          '#{a d/segment-set
             b ˜})))
+
+(deftest find-segment-mapping
+  (is (= (d/find-segment-mapping (:signals (first example2)))
+         example2-signal-map)))
+
+(deftest decode-output
+  (is (= (d/decode-output '#{c d f e b} example2-signal-map)
+         5)))
 
 (deftest part2
   (is (= (d/part2 example2) 5353))
