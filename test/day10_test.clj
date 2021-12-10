@@ -11,3 +11,15 @@
            (\( \]))))
   (is (= (d/parse-input "<([{}])>")
          '((\< \( \[ \{ \} \] \) \>)))))
+
+(deftest illegal-char
+  (is (= (d/illegal-char '(\])) \]))
+  (is (= (d/illegal-char (d/parse-line "{([(<{}[<>[]}>{[]{[(<()>"))
+         \}))
+  (is (= (d/illegal-char (d/parse-line "[[<[([]))<([[{}[[()]]]"))
+         \)))
+  (is (= (d/illegal-char (d/parse-line "[{[{({}]{}}([{[{{{}}([]"))
+         \])))
+
+(deftest part1
+  (is (= (d/part1 example) 26397)))
