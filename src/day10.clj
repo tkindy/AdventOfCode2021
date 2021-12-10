@@ -33,16 +33,16 @@
 (defn illegal-chars [code]
   (map illegal-char code))
 
-(def scores {\) 3
-             \] 57
-             \} 1197
-             \> 25137})
+(def illegal-char-score {\) 3
+                         \] 57
+                         \} 1197
+                         \> 25137})
 
 (defn part1 [code]
   (->> code
        illegal-chars
        (filter (comp not nil?))
-       (map scores)
+       (map illegal-char-score)
        (apply +)))
 
 (defn -main []
