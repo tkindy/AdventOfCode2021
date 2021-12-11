@@ -104,6 +104,10 @@
 (defn part1 [energies]
   (count-flashes energies 100))
 
+(defn part2 [energies]
+  0)
+
 (defn -main []
   (let [energies (read-input)]
-    (println "Part 1: " (part1 energies))))
+    (println "Part 1: " (part1 energies))
+    (println "Part 2: " (part2 energies))))

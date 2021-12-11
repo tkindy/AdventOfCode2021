@@ -40,3 +40,6 @@
 
 (deftest part1
   (is (= (d/part1 example) 1656)))
+
+(deftest part2
+  (is (= (d/part2 example) 195)))
