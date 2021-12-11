@@ -16,3 +16,27 @@
 
 (deftest parse-input
   (is (= (d/parse-input example-input) example)))
+
+(deftest inc-all
+  (is (= (d/inc-all [[1 2 3]
+                     [3 4 8]
+                     [9 1 4]])
+         [[2 3 4]
+          [4 5 9]
+          [10 2 5]])))
+
+(deftest neighbors
+  (is (= (d/neighbors [1 2] [[8 8 8]
+                             [8 8 8]
+                             [8 8 8]])
+         '([0 1] [1 1] [2 1] [0 2] [2 2]))))
+
+(deftest count-zeroes
+  (is (= (d/count-zeroes example) 0))
+  (is (= (d/count-zeroes [[1 2 0 3 4]
+                          [0 2 1 3 0]
+                          [2 0 3 1 0]])
+         5)))
+
+(deftest part1
+  (is (= (d/part1 example) 1656)))
