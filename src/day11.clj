@@ -104,8 +104,15 @@
 (defn part1 [energies]
   (count-flashes energies 100))
 
+(defn all-zeroes? [energies]
+  (every? (fn [row] (every? zero? row)) energies))
+
 (defn part2 [energies]
-  0)
+  (loop [i 0
+         energies energies]
+    (if (all-zeroes? energies)
+      i
+      (recur (inc i) (step energies)))))
 
 (defn -main []
   (let [energies (read-input)]
