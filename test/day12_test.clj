@@ -18,6 +18,30 @@
           :d     #{:b}
           :end   #{:A :b}})))
 
+(deftest finished?
+  (is (= (d/finished? [:start :A :end]) true))
+  (is (= (d/finished? [:start :A]) false)))
+
+(deftest iterate-paths
+  (is (= (d/iterate-paths #{[:start]} example1)
+         [#{[:start :A] [:start :b]} #{}]))
+  (is (= (d/iterate-paths #{[:start :A] [:start :b]} example1)
+         [#{[:start :A :b] [:start :A :c] [:start :b :A] [:start :b :d]}
+          #{[:start :A :end] [:start :b :end]}])))
+
+(deftest all-paths
+  (is (= (d/all-paths example1)
+         #{[:start :A :b :A :c :A :end]
+           [:start :A :b :A :end]
+           [:start :A :b :end]
+           [:start :A :c :A :b :A :end]
+           [:start :A :c :A :b :end]
+           [:start :A :c :A :end]
+           [:start :A :end]
+           [:start :b :A :c :A :end]
+           [:start :b :A :end]
+           [:start :b :end]})))
+
 (deftest part1
   (is (= (d/part1 example1) 10))
   (is (= (d/part1 example2) 19))
