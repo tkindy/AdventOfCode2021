@@ -47,6 +47,12 @@
   (is (= (d/part1 example2) 19))
   (is (= (d/part1 example3) 226)))
 
+(deftest can-revisit?
+  (is (= (d/can-revisit? :start [:start :A]) false))
+  (is (= (d/can-revisit? :a [:start :a :b]) true))
+  (is (= (d/can-revisit? :a [:start :a :b :a]) false))
+  (is (= (d/can-revisit? :b [:start :a :b :a]) false)))
+
 (deftest part2
   (is (= (d/part2 example1) 36))
   (is (= (d/part2 example2) 103))

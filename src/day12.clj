@@ -54,8 +54,17 @@
 (defn part1-visitable? [cave path]
   (or (big-cave? cave) (not (visited? cave path))))
 
+(defn can-revisit? [cave path]
+  (and (not (#{:start :end} cave))
+       (let [visit-counts (->> path
+                               (map (fn [cave] {cave 1}))
+                               (apply merge-with +))]
+         (not-any? (fn [[cave visit-count]]
+                     (and (not (big-cave? cave)) (> visit-count 1)))
+                   visit-counts))))
+
 (defn part2-visitable? [cave path]
-  false)
+  (or (part1-visitable? cave path) (can-revisit? cave path)))
 
 (defn count-paths [edges visitable?]
   (count (all-paths edges visitable?)))
