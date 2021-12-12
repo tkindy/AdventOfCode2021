@@ -57,6 +57,10 @@
 (defn part1 [edges]
   (count (all-paths edges)))
 
+(defn part2 [edges]
+  0)
+
 (defn -main []
   (let [edges (read-input)]
-    (println "Part 1:" (part1 edges))))
+    (println "Part 1:" (part1 edges))
+    (println "Part 2:" (part2 edges))))
