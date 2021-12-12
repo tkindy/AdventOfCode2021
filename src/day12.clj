@@ -57,11 +57,14 @@
 (defn part2-visitable? [cave path]
   false)
 
+(defn count-paths [edges visitable?]
+  (count (all-paths edges visitable?)))
+
 (defn part1 [edges]
-  (count (all-paths edges part1-visitable?)))
+  (count-paths edges part1-visitable?))
 
 (defn part2 [edges]
-  0)
+  (count-paths edges part2-visitable?))
 
 (defn -main []
   (let [edges (read-input)]
