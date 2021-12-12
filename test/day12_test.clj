@@ -23,14 +23,14 @@
   (is (= (d/finished? [:start :A]) false)))
 
 (deftest iterate-paths
-  (is (= (d/iterate-paths #{[:start]} example1)
+  (is (= (d/iterate-paths #{[:start]} example1 d/part1-visitable?)
          [#{[:start :A] [:start :b]} #{}]))
-  (is (= (d/iterate-paths #{[:start :A] [:start :b]} example1)
+  (is (= (d/iterate-paths #{[:start :A] [:start :b]} example1 d/part1-visitable?)
          [#{[:start :A :b] [:start :A :c] [:start :b :A] [:start :b :d]}
           #{[:start :A :end] [:start :b :end]}])))
 
 (deftest all-paths
-  (is (= (d/all-paths example1)
+  (is (= (d/all-paths example1 d/part1-visitable?)
          #{[:start :A :b :A :c :A :end]
            [:start :A :b :A :end]
            [:start :A :b :end]

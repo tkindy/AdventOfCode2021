@@ -20,13 +20,7 @@
   (let [name (name cave)]
     (= (str/upper-case name) name)))
 
-(defn visited? [cave path]
-  (some #(= % cave) path))
-
-(defn visitable? [cave path]
-  (or (big-cave? cave) (not (visited? cave path))))
-
-(defn iterate-path [path edges]
+(defn iterate-path [path edges visitable?]
   (let [cur-cave (peek path)
         adjacents (edges cur-cave)]
     (->> adjacents
@@ -39,26 +33,37 @@
 (defn finished? [path]
   (= (peek path) :end))
 
-(defn iterate-paths [paths edges]
-  (let [iterated (set (mapcat #(iterate-path % edges) paths))
+(defn iterate-paths [paths edges visitable?]
+  (let [iterated (set (mapcat #(iterate-path % edges visitable?) paths))
         finished (set (filter finished? iterated))
         in-progress (set/difference iterated finished)]
     [in-progress finished]))
 
-(defn all-paths [edges]
+(defn all-paths [edges visitable?]
   (loop [in-progress #{[:start]}
          finished    #{}]
     (if (empty? in-progress)
       finished
       (let [[in-progress newly-finished]
-            (iterate-paths in-progress edges)]
+            (iterate-paths in-progress edges visitable?)]
         (recur in-progress (set/union finished newly-finished))))))
 
+;;;;; Part 1 ;;;;;
+
+(defn visited? [cave path]
+  (some #(= % cave) path))
+
+(defn part1-visitable? [cave path]
+  (or (big-cave? cave) (not (visited? cave path))))
+
 (defn part1 [edges]
-  (count (all-paths edges)))
+  (count (all-paths edges part1-visitable?)))
+
+;;;;;; Part 2 ;;;;;
 
 (defn part2 [edges]
   0)
+
 
 (defn -main []
   (let [edges (read-input)]
