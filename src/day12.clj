@@ -16,10 +16,6 @@
 (defn read-input []
   (parse-input (slurp "inputs/day12.txt")))
 
-(defn big-cave? [cave]
-  (let [name (name cave)]
-    (= (str/upper-case name) name)))
-
 (defn iterate-path [path edges visitable?]
   (let [cur-cave (peek path)
         adjacents (edges cur-cave)]
@@ -48,7 +44,9 @@
             (iterate-paths in-progress edges visitable?)]
         (recur in-progress (set/union finished newly-finished))))))
 
-;;;;; Part 1 ;;;;;
+(defn big-cave? [cave]
+  (let [name (name cave)]
+    (= (str/upper-case name) name)))
 
 (defn visited? [cave path]
   (some #(= % cave) path))
@@ -56,14 +54,14 @@
 (defn part1-visitable? [cave path]
   (or (big-cave? cave) (not (visited? cave path))))
 
+(defn part2-visitable? [cave path]
+  false)
+
 (defn part1 [edges]
   (count (all-paths edges part1-visitable?)))
 
-;;;;;; Part 2 ;;;;;
-
 (defn part2 [edges]
   0)
-
 
 (defn -main []
   (let [edges (read-input)]
