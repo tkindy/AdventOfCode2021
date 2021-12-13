@@ -39,6 +39,35 @@
 (defn part1 [{:keys [dots folds]}]
   (count (make-fold dots (first folds))))
 
+(defn dots->map [dots]
+  (reduce (fn [m {:keys [x y] :as dot}]
+            (assoc-in m [y x] dot))
+          {}
+          dots))
+
+(defn draw-line [y line-map]
+  (let [xs (keys line-map)]
+    (->> (reduce (fn [line x]
+                   (conj line (if (line-map x) "#" " ")))
+                 []
+                 (range (apply min xs) (inc (apply max xs))))
+         (apply str))))
+
+(defn draw-dots [dots]
+  (let [dot-map (dots->map dots)
+        ys (keys dot-map)]
+    (->> (reduce (fn [drawing y]
+                   (conj drawing (draw-line y (dot-map y))))
+                 []
+                 (range (apply min ys) (inc (apply max ys))))
+         (str/join "\n"))))
+
+(defn part2 [{:keys [dots folds]}]
+  (let [dots (reduce make-fold dots folds)]
+    (draw-dots dots)))
+
 (defn -main []
   (let [state (read-input)]
-    (println "Part 1:" (part1 state))))
+    (println "Part 1:" (part1 state))
+    (println "Part 2:")
+    (println (part2 state))))
