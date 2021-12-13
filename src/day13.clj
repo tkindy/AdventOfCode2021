@@ -2,7 +2,8 @@
   (:require [clojure.string :as str]))
 
 (defn parse-dot [line]
-  (map #(Integer/parseInt %) (str/split line #",")))
+  (let [[x y] (map #(Integer/parseInt %) (str/split line #","))]
+    {:x x, :y y}))
 
 (defn parse-dots [dots]
   (set (map parse-dot (str/split-lines dots))))
@@ -24,4 +25,20 @@
 (defn read-input []
   (parse-input (slurp "inputs/day13.txt")))
 
-(defn -main [])
+(defn make-fold-point [point {axis-value :value, :keys [axis]}]
+  (let [point-value (point axis)]
+    (if (< point-value axis-value)
+      point
+      (assoc point axis (- (* 2 axis-value) point-value)))))
+
+(defn make-fold [dots fold]
+  (->> dots
+       (map (fn [dot] (make-fold-point dot fold)))
+       set))
+
+(defn part1 [{:keys [dots folds]}]
+  (count (make-fold dots (first folds))))
+
+(defn -main []
+  (let [state (read-input)]
+    (println "Part 1:" (part1 state))))
