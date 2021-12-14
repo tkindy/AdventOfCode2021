@@ -36,15 +36,22 @@
        (map (fn [element] {element 1}))
        (apply merge-with +)))
 
-(defn part1 [{:keys [template rules]}]
+(defn run [{:keys [template rules]} steps]
   (let [chain (reduce (fn [chain _] (step chain rules))
                       template
-                      (range 10))
+                      (range steps))
         freqs (count-elements chain)
         min-count (apply min (vals freqs))
         max-count (apply max (vals freqs))]
     (- max-count min-count)))
 
+(defn part1 [state]
+  (run state 10))
+
+(defn part2 [state]
+  (run state 40))
+
 (defn -main []
   (let [state (read-input)]
-    (println "Part 1:" (part1 state))))
+    (println "Part 1:" (part1 state))
+    (println "Part 2:" (part2 state))))
