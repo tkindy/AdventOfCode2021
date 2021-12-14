@@ -2,7 +2,12 @@
   (:require [clojure.string :as str]))
 
 (defn parse-template [template]
-  (into [] template))
+  {:pairs
+   (->> template
+        (partition 2 1)
+        (map (fn [pair] {pair 1}))
+        (apply merge-with +))
+   :first (first template)})
 
 (defn parse-rule [rule]
   (let [[pair result] (str/split rule #" -> ")]
@@ -23,24 +28,26 @@
   (parse-input (slurp "inputs/day14.txt")))
 
 (defn step [chain rules]
-  (let [new-chain
-        (->> chain
-             (partition 2 1)
-             (reduce (fn [chain pair]
-                       (conj chain (first pair) (rules pair)))
-                     []))]
-    (conj new-chain (peek chain))))
+  (->> chain
+       (map (fn [[pair count]]
+              (let [new-elem (rules pair)
+                    [left right] pair]
+                {[left new-elem] count
+                 [new-elem right] count})))
+       (apply merge-with +)))
 
 (defn count-elements [chain]
   (->> chain
-       (map (fn [element] {element 1}))
+       (map (fn [[[_ right] count]] {right count}))
        (apply merge-with +)))
 
 (defn run [{:keys [template rules]} steps]
   (let [chain (reduce (fn [chain _] (step chain rules))
-                      template
+                      (:pairs template)
                       (range steps))
-        freqs (count-elements chain)
+        freqs (-> chain
+                  count-elements
+                  (update (:first template) inc))
         min-count (apply min (vals freqs))
         max-count (apply max (vals freqs))]
     (- max-count min-count)))
