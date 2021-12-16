@@ -86,6 +86,16 @@
 (defn part1 [risk-map]
   (:cost (cheapest-path risk-map)))
 
+;; TODO
+(defn build-large-risk-map [risk-map]
+  risk-map)
+
+;; TODO
+(defn part2 [risk-map]
+  (let [risk-map (build-large-risk-map risk-map)]
+    0))
+
 (defn -main []
   (let [risk-map (read-input)]
-    (println "Part 1:" (part1 risk-map))))
+    (println "Part 1:" (part1 risk-map))
+    (println "Part 2:" (part2 risk-map))))
