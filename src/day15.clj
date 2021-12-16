@@ -86,14 +86,44 @@
 (defn part1 [risk-map]
   (:cost (cheapest-path risk-map)))
 
-;; TODO
-(defn build-large-risk-map [risk-map]
-  risk-map)
+(defn iterate-risk [risk increase]
+  (-> risk
+      dec
+      (+ increase)
+      (mod 9)
+      inc))
 
-;; TODO
+(defn extend-row [row]
+  (let [row-len (count row)
+        new-row-len (* row-len 5)]
+    (mapv (fn [x]
+            (iterate-risk (nth row (mod x row-len))
+                          (quot x row-len)))
+          (range new-row-len))))
+
+(defn extend-rows [risk-map]
+  (mapv extend-row risk-map))
+
+(defn iterate-row [tile-y row]
+  (let [orig-len (/ (count row) 5)]
+    (->> (map-indexed (fn [i risk]
+                        (let [tile-x (quot i orig-len)]
+                          (iterate-risk risk tile-y)))
+                      row)
+         vec)))
+
+(defn iterate-tile-row [tile-y tile-row]
+  (map (fn [row] (iterate-row tile-y row))
+       tile-row))
+
+(defn build-large-risk-map [risk-map]
+  (let [tile-row (extend-rows risk-map)]
+    (->> (mapcat (fn [i] (iterate-tile-row i tile-row)) (range 5))
+         vec)))
+
 (defn part2 [risk-map]
   (let [risk-map (build-large-risk-map risk-map)]
-    0))
+    (:cost (cheapest-path risk-map))))
 
 (defn -main []
   (let [risk-map (read-input)]

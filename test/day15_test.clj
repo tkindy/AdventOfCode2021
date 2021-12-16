@@ -12,7 +12,7 @@
           [1 3 8 1 3 7 3 6 7 2]
           [2 1 3 6 5 1 1 3 2 8]
           [3 6 9 4 9 3 1 5 6 9]
-          [7 4 6 3 4 1 7 1 2 1]
+          [7 4 6 3 4 1 7 1 1 1]
           [1 3 1 9 1 2 8 1 3 7]
           [1 3 5 9 9 1 2 4 2 1]
           [3 1 2 5 4 2 1 6 3 9]
@@ -33,9 +33,23 @@
 (deftest cheapest-path
   (is (= (d/cheapest-path example)
          {:path [[0 1] [0 2] [1 2] [2 2] [3 2] [4 2]
-                 [5 2] [6 2] [6 3] [7 3] [7 4] [7 5]
+                 [5 2] [6 2] [6 3] [7 3] [7 4] [8 4]
                  [8 5] [8 6] [8 7] [8 8] [9 8] [9 9]]
           :cost 40})))
 
 (deftest part1
   (is (= (d/part1 example) 40)))
+
+(deftest iterate-risk
+  (is (= (d/iterate-risk 8 0) 8))
+  (is (= (d/iterate-risk 8 1) 9))
+  (is (= (d/iterate-risk 8 2) 1))
+  (is (= (d/iterate-risk 8 3) 2))
+  (is (= (d/iterate-risk 8 4) 3)))
+
+(deftest build-large-risk-map
+  (is (= (d/build-large-risk-map example)
+         (d/parse-input (slurp "examples/day15-big.txt")))))
+
+(deftest part2
+  (is (= (d/part2 example) 315)))
