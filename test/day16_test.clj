@@ -44,3 +44,13 @@
          23))
   (is (= (d/part1 (d/parse-input "A0016C880162017C3686B18A3D4780\n"))
          31)))
+
+(deftest part2
+  (is (= (d/part2 (d/parse-input "C200B40A82")) 3))
+  (is (= (d/part2 (d/parse-input "04005AC33890")) 54))
+  (is (= (d/part2 (d/parse-input "880086C3E88112")) 7))
+  (is (= (d/part2 (d/parse-input "CE00C43D881120")) 9))
+  (is (= (d/part2 (d/parse-input "D8005AC2A8F0")) 1))
+  (is (= (d/part2 (d/parse-input "F600BC2D8F")) 0))
+  (is (= (d/part2 (d/parse-input "9C005AC2F8F0")) 0))
+  (is (= (d/part2 (d/parse-input "9C0141080250320F1802104A08")) 1)))

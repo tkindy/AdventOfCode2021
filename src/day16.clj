@@ -100,6 +100,10 @@
 (defn part1 [packet]
   (sum-versions packet))
 
+(defn part2 [packet]
+  0)
+
 (defn -main []
   (let [packet (read-input)]
-    (println "Part 1:" (part1 packet))))
+    (println "Part 1:" (part1 packet))
+    (println "Part 2:" (part2 packet))))
