@@ -14,4 +14,9 @@
 (defn read-input []
   (parse-input (slurp "inputs/day17.txt")))
 
-(defn -main [])
+(defn part1 [target]
+  0)
+
+(defn -main []
+  (let [target (read-input)]
+    (println "Part 1:" (part1 target))))

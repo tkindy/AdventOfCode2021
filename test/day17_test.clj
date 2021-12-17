@@ -7,3 +7,6 @@
 
 (deftest parse-input
   (is (= example {:x [20 30] :y [-10 -5]})))
+
+(deftest part1
+  (is (= (d/part1 example) 45)))
