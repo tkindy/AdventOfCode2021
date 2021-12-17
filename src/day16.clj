@@ -63,11 +63,11 @@
           (parse-literal [bits]
             (loop [value-bits (list)
                    bits bits]
-              (let [chunk (take 5 bits)
+              (let [[chunk bits] (take-bits 5 bits)
                     value-bits (concat value-bits (drop 1 chunk))]
                 (if (= (first chunk) 0)
                   [{:value (bits->int value-bits)} bits]
-                  (recur value-bits (drop 5 bits))))))
+                  (recur value-bits bits)))))
           (parse-header [bits]
             (let [[version bits] (take-int 3 bits)
                   [type bits] (take-int 3 bits)]
