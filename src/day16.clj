@@ -24,7 +24,7 @@
   (mapcat decode-char input))
 
 (defn bits->int [bits]
-  (Integer/parseInt (apply str bits) 2))
+  (Long/parseLong (apply str bits) 2))
 
 (defn take-bits [n bits]
   [(take n bits) (drop n bits)])
