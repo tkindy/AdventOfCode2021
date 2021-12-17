@@ -58,7 +58,13 @@
           (parse-operator-by-count [bits]
             {})
           (parse-literal [bits]
-            {})
+            (reduce (fn [literal-bits chunk]
+                      (let [literal-bits (concat literal-bits (drop 1 chunk))]
+                        (if (= (first chunk) 0)
+                          (reduced {:value (bits->int literal-bits)})
+                          literal-bits)))
+                    (list)
+                    (partition 5 bits)))
           (parse-header [bits]
             (let [[version bits] (take-int 3 bits)
                   [type bits] (take-int 3 bits)]
