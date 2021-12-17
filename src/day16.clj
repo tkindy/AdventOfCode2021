@@ -36,7 +36,7 @@
 (defn parse-input [input]
   (letfn [(parse-packet [bits]
             (let [[{:keys [type], :as header} bits] (parse-header bits)
-                  [body bits] (if (= type 4)
+                  [body bits] (if (= type :literal)
                                 (parse-literal bits)
                                 (parse-operator bits))]
               [(-> (merge header body)
@@ -75,7 +75,16 @@
                   (recur value-bits bits)))))
           (parse-header [bits]
             (let [[version bits] (take-int 3 bits)
-                  [type bits] (take-int 3 bits)]
+                  [type bits] (take-int 3 bits)
+                  type (case type
+                         0 :sum
+                         1 :product
+                         2 :min
+                         3 :max
+                         4 :literal
+                         5 :greater-than
+                         6 :less-than
+                         7 :equal-to)]
               [{:version version, :type type}, bits]))]
     (->> input
          decode
