@@ -47,17 +47,16 @@
               (if (= length-type 0)
                 (parse-operator-by-length bits)
                 (parse-operator-by-count bits))))
-          ;; TODO
           (parse-operator-by-length [bits]
             (let [[length bits] (take-int 15 bits)
-                  bits (take length bits)
+                  [packet-bits bits] (take-bits length bits)
                   subpackets (loop [subpackets []
-                                    bits bits]
+                                    bits packet-bits]
                                (if (empty? bits)
                                  subpackets
                                  (let [[packet bits] (parse-packet bits)]
                                    (recur (conj subpackets packet) bits))))]
-              [{} bits]))
+              [{:subpackets subpackets} bits]))
           ;; TODO
           (parse-operator-by-count [bits]
             [{} bits])
