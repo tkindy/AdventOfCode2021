@@ -99,24 +99,22 @@
   (sum-versions packet))
 
 (defn evaluate [{:keys [type value subpackets]}]
-  (case type
-    :sum (apply + (map evaluate subpackets))
-    :product (apply * (map evaluate subpackets))
-    :min (apply min (map evaluate subpackets))
-    :max (apply max (map evaluate subpackets))
-    :literal value
-    :greater-than (if (> (evaluate (first subpackets))
-                         (evaluate (second subpackets)))
-                    1
-                    0)
-    :less-than (if (< (evaluate (first subpackets))
+  (letfn [(aggregate [op]
+            (apply op (map evaluate subpackets)))
+          (compare [comp]
+            (if (comp (evaluate (first subpackets))
                       (evaluate (second subpackets)))
-                 1
-                 0)
-    :equal-to (if (= (evaluate (first subpackets))
-                     (evaluate (second subpackets)))
-                1
-                0)))
+              1
+              0))]
+    (case type
+      :sum          (aggregate +)
+      :product      (aggregate *)
+      :min          (aggregate min)
+      :max          (aggregate max)
+      :literal      value
+      :greater-than (compare >)
+      :less-than    (compare <)
+      :equal-to     (compare =))))
 
 (defn part2 [packet]
   (evaluate packet))
