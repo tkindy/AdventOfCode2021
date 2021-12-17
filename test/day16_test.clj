@@ -34,3 +34,13 @@
                         :subpackets [{:version 5
                                       :subpackets [{:version 6
                                                     :value 15}]}]}]})))
+
+(deftest part1
+  (is (= (d/part1 (d/parse-input "8A004A801A8002F478\n"))
+         16))
+  (is (= (d/part1 (d/parse-input "620080001611562C8802118E34\n"))
+         12))
+  (is (= (d/part1 (d/parse-input "C0015000016115A2E0802F182340\n"))
+         23))
+  (is (= (d/part1 (d/parse-input "A0016C880162017C3686B18A3D4780\n"))
+         31)))

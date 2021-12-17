@@ -85,4 +85,9 @@
 (defn read-input []
   (parse-input (slurp "inputs/day16.txt")))
 
-(defn -main [])
+(defn part1 [packet]
+  0)
+
+(defn -main []
+  (let [packet (read-input)]
+    (println "Part 1:" (part1 packet))))
