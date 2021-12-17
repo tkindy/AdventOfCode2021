@@ -85,8 +85,11 @@
 (defn read-input []
   (parse-input (slurp "inputs/day16.txt")))
 
+(defn sum-versions [{:keys [version subpackets]}]
+  (apply + version (map sum-versions subpackets)))
+
 (defn part1 [packet]
-  0)
+  (sum-versions packet))
 
 (defn -main []
   (let [packet (read-input)]
