@@ -13,26 +13,38 @@
 (deftest parse-input
   (is (= (d/parse-input "D2FE28\n")
          {:version 6
+          :type :literal
           :value 2021}))
   (is (= (d/parse-input "38006F45291200\n")
          {:version 1
+          :type :less-than
           :subpackets [{:version 6
+                        :type :literal
                         :value 10}
                        {:version 2
+                        :type :literal
                         :value 20}]}))
   (is (= (d/parse-input "EE00D40C823060\n")
          {:version 7
+          :type :max
           :subpackets [{:version 2
+                        :type :literal
                         :value 1}
                        {:version 4
+                        :type :literal
                         :value 2}
                        {:version 1
+                        :type :literal
                         :value 3}]}))
   (is (= (d/parse-input "8A004A801A8002F478\n")
          {:version 4
+          :type :min
           :subpackets [{:version 1
+                        :type :min
                         :subpackets [{:version 5
+                                      :type :min
                                       :subpackets [{:version 6
+                                                    :type :literal
                                                     :value 15}]}]}]})))
 
 (deftest part1

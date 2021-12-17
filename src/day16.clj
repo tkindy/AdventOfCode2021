@@ -39,9 +39,7 @@
                   [body bits] (if (= type :literal)
                                 (parse-literal bits)
                                 (parse-operator bits))]
-              [(-> (merge header body)
-                   (dissoc :type))
-               bits]))
+              [(merge header body) bits]))
           (parse-operator [bits]
             (let [[length-type bits] (take-int 1 bits)]
               (if (= length-type 0)
@@ -100,8 +98,11 @@
 (defn part1 [packet]
   (sum-versions packet))
 
-(defn part2 [packet]
+(defn evaluate [packet]
   0)
+
+(defn part2 [packet]
+  (evaluate packet))
 
 (defn -main []
   (let [packet (read-input)]
