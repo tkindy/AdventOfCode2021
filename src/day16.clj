@@ -36,9 +36,9 @@
 (defn parse-input [input]
   (letfn [(parse-packet [bits]
             (let [[{:keys [type], :as header} bits] (parse-header bits)
-                  body (if (= type 4)
-                         (parse-literal bits)
-                         (parse-operator bits))]
+                  [body bits] (if (= type 4)
+                                (parse-literal bits)
+                                (parse-operator bits))]
               [(-> (merge header body)
                    (dissoc :type))
                bits]))
@@ -53,18 +53,22 @@
                   bits (take length bits)
                   subpackets (loop [subpackets []
                                     bits bits]
-                               ())]))
+                               (if (empty? bits)
+                                 subpackets
+                                 (let [[packet bits] (parse-packet bits)]
+                                   (recur (conj subpackets packet) bits))))]
+              [{} bits]))
           ;; TODO
           (parse-operator-by-count [bits]
-            {})
+            [{} bits])
           (parse-literal [bits]
-            (reduce (fn [literal-bits chunk]
-                      (let [literal-bits (concat literal-bits (drop 1 chunk))]
-                        (if (= (first chunk) 0)
-                          (reduced {:value (bits->int literal-bits)})
-                          literal-bits)))
-                    (list)
-                    (partition 5 bits)))
+            (loop [value-bits (list)
+                   bits bits]
+              (let [chunk (take 5 bits)
+                    value-bits (concat value-bits (drop 1 chunk))]
+                (if (= (first chunk) 0)
+                  [{:value (bits->int value-bits)} bits]
+                  (recur value-bits (drop 5 bits))))))
           (parse-header [bits]
             (let [[version bits] (take-int 3 bits)
                   [type bits] (take-int 3 bits)]
