@@ -57,9 +57,14 @@
                                  (let [[packet bits] (parse-packet bits)]
                                    (recur (conj subpackets packet) bits))))]
               [{:subpackets subpackets} bits]))
-          ;; TODO
           (parse-operator-by-count [bits]
-            [{} bits])
+            (let [[packet-count bits] (take-int 11 bits)
+                  [subpackets bits] (reduce (fn [[subpackets bits] _]
+                                              (let [[packet bits] (parse-packet bits)]
+                                                [(conj subpackets packet) bits]))
+                                            [[] bits]
+                                            (range packet-count))]
+              [{:subpackets subpackets} bits]))
           (parse-literal [bits]
             (loop [value-bits (list)
                    bits bits]
