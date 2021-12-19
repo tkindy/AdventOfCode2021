@@ -3,7 +3,6 @@
 (def input-pattern #"^target area: x=(-?\d+)\.\.(-?\d+), y=(-?\d+)..(-?\d+)\n$")
 
 (defn parse-input [input]
-
   (let [[min-x max-x min-y max-y]
         (->> input
              (re-matches input-pattern)
