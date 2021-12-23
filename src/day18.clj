@@ -15,6 +15,13 @@
 (defn parse-input [input]
   (map parse-number (str/split-lines input)))
 
+(defn vec->number [v]
+  (if (number? v)
+    v
+    (let [[left right] v]
+      {:left (vec->number left)
+       :right (vec->number right)})))
+
 (defn read-input []
   (parse-input (slurp "inputs/day18.txt")))
 

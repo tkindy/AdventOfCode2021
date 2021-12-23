@@ -27,6 +27,16 @@
                   :right 3}
            :right 6}])))
 
+(deftest vec->number
+  (is (= (d/vec->number 5) 5))
+  (is (= (d/vec->number [0,0]) {:left 0, :right 0}))
+  (is (= (d/vec->number [[0,[4,5]],[0,0]])
+         {:left {:left 0
+                 :right {:left 4
+                         :right 5}}
+          :right {:left 0
+                  :right 0}})))
+
 (deftest first-left
   (is (= (d/first-left {:left {:left {:left {:left {:left 1
                                                     :right 1}
