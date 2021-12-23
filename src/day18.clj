@@ -59,8 +59,9 @@
 (defn first-right [number path]
   (first-towards :right number path))
 
-(defn explode [{:keys [left right] :as number} reduce-path]
-  (let [left-path (first-left number reduce-path)
+(defn explode [number reduce-path]
+  (let [{:keys [left right]} (get-in number reduce-path)
+        left-path (first-left number reduce-path)
         right-path (first-right number reduce-path)
         number (if left-path
                  (update-in number left-path + left)
