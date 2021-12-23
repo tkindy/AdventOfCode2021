@@ -53,6 +53,20 @@
                        [:left :right])
          [:left :left :right :right])))
 
+(deftest first-right
+  (is (= (d/first-right {:left {:left {:left {:left 0
+                                              :right 7}
+                                       :right 4}
+                                :right {:left {:left 7
+                                               :right 8}
+                                        :right {:left 0
+                                                :right {:left 6
+                                                        :right 7}}}}
+                         :right {:left 1
+                                 :right 1}}
+                        [:left :right :right :right])
+         [:right :left])))
+
 (deftest find-reducable
   (is (= (d/find-reducable {:left 1 :right 1}) nil)
       (= (d/find-reducable {:left {:left {:left {:left {:left 1
@@ -88,6 +102,27 @@
                          :right 4}}
           :right {:left 5
                   :right 5}})))
+
+(deftest reduce-number
+  (is (= (d/reduce-number {:left {:left {:left {:left {:left 4
+                                                       :right 3}
+                                                :right 4}
+                                         :right 4}
+                                  :right {:left 7
+                                          :right {:left {:left 8
+                                                         :right 4}
+                                                  :right 9}}}
+                           :right {:left 1
+                                   :right 1}})
+         {:left {:left {:left {:left 0
+                               :right 7}
+                        :right 4}
+                 :right {:left {:left 7
+                                :right 8}
+                         :right {:left 6
+                                 :right 0}}}
+          :right {:left 8
+                  :right 1}})))
 
 (deftest sum
   (is (= (d/sum [{:left 1, :right 1}

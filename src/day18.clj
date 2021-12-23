@@ -39,19 +39,19 @@
                  {:left left, :right right}))))
 
 (defn first-towards [dir number path]
-  (let [stem (->> path
-                  reverse
-                  (drop-while #(= % dir))
-                  (drop 1)
-                  reverse
-                  vec)]
-    (if (empty? stem)
-      nil
-      (let [opp (if (= dir :left) :right :left)]
-        (loop [path (conj stem dir)]
-          (if (number? (get-in number path))
-            path
-            (recur (conj path opp))))))))
+  (if (every? #(= % dir) path)
+    nil
+    (let [stem (->> path
+                    reverse
+                    (drop-while #(= % dir))
+                    (drop 1)
+                    reverse
+                    vec)
+          opp (if (= dir :left) :right :left)]
+      (loop [path (conj stem dir)]
+        (if (number? (get-in number path))
+          path
+          (recur (conj path opp)))))))
 
 (defn first-left [number path]
   (first-towards :left number path))
