@@ -22,9 +22,11 @@
 (defn sum [numbers]
   (first numbers))
 
-;; TODO
 (defn magnitude [number]
-  0)
+  (if (number? number)
+    number
+    (+ (* 3 (magnitude (:left number)))
+       (* 2 (magnitude (:right number))))))
 
 (defn part1 [numbers]
   (-> numbers
