@@ -2,10 +2,10 @@
   (:require [clojure.string :as str]))
 
 (defn parse-number-helper [[left right]]
-  (let [process (fn [v]
-                  (if (number? v)
-                    v
-                    (parse-number-helper v)))]
+  (letfn [(process [v]
+            (if (number? v)
+              v
+              (parse-number-helper v)))]
     {:left (process left), :right (process right)}))
 
 (defn parse-number [line]
