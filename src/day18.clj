@@ -30,22 +30,28 @@
                           (helper (:right number) (conj path :right))))))]
     (helper number [])))
 
-;; TODO
 (defn split [number reduce-path]
-  number)
+  (update-in number
+             reduce-path
+             (fn [n]
+               (let [left (quot n 2)
+                     right (- n left)]
+                 {:left left, :right right}))))
 
 (defn first-towards [dir number path]
-  (let [opp (if (= dir :left) :right :left)
-        stem (->> path
+  (let [stem (->> path
                   reverse
-                  (take-while #(= % dir))
-                  reverse)]
+                  (drop-while #(= % dir))
+                  (drop 1)
+                  reverse
+                  vec)]
     (if (empty? stem)
       nil
-      (loop [path (conj stem dir)]
-        (if (number? (get-in number path))
-          path
-          (recur (conj path opp)))))))
+      (let [opp (if (= dir :left) :right :left)]
+        (loop [path (conj stem dir)]
+          (if (number? (get-in number path))
+            path
+            (recur (conj path opp))))))))
 
 (defn first-left [number path]
   (first-towards :left number path))
