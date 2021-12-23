@@ -19,8 +19,14 @@
   (parse-input (slurp "inputs/day18.txt")))
 
 ;; TODO
+(defn reduce-number [number]
+  number)
+
+(defn add [n1 n2]
+  (reduce-number {:left n1, :right n2}))
+
 (defn sum [numbers]
-  (first numbers))
+  (reduce add numbers))
 
 (defn magnitude [number]
   (if (number? number)
