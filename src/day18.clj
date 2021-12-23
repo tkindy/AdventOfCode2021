@@ -18,8 +18,18 @@
 (defn read-input []
   (parse-input (slurp "inputs/day18.txt")))
 
-(defn part1 [numbers]
+;; TODO
+(defn sum [numbers]
+  (first numbers))
+
+;; TODO
+(defn magnitude [number]
   0)
+
+(defn part1 [numbers]
+  (-> numbers
+      sum
+      magnitude))
 
 (defn -main []
   (let [numbers (read-input)]
