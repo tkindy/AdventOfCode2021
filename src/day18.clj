@@ -34,9 +34,35 @@
 (defn split [number reduce-path]
   number)
 
-;; TODO
-(defn explode [number reduce-path]
-  number)
+(defn first-towards [dir number path]
+  (let [opp (if (= dir :left) :right :left)
+        stem (->> path
+                  reverse
+                  (take-while #(= % dir))
+                  reverse)]
+    (if (empty? stem)
+      nil
+      (loop [path (conj stem dir)]
+        (if (number? (get-in number path))
+          path
+          (recur (conj path opp)))))))
+
+(defn first-left [number path]
+  (first-towards :left number path))
+
+(defn first-right [number path]
+  (first-towards :right number path))
+
+(defn explode [{:keys [left right] :as number} reduce-path]
+  (let [left-path (first-left number reduce-path)
+        right-path (first-right number reduce-path)
+        number (if left-path
+                 (update-in number left-path + left)
+                 number)
+        number (if right-path
+                 (update-in number right-path + right)
+                 number)]
+    (assoc-in number reduce-path 0)))
 
 (defn reduce-once [number reduce-path]
   (let [reducable (get-in number reduce-path)]
