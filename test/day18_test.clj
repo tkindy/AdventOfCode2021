@@ -27,6 +27,20 @@
                   :right 3}
            :right 6}])))
 
+(deftest find-reducable
+  (is (= (d/find-reducable {:left 1 :right 1}) nil)
+      (= (d/find-reducable {:left {:left {:left {:left {:left 1
+                                                        :right 1}
+                                                 :right {:left 2
+                                                         :right 2}}
+                                          :right {:left 3
+                                                  :right 3}}
+                                   :right {:left 4
+                                           :right 4}}
+                            :right {:left 5
+                                    :right 5}})
+         [:left :left :left :left])))
+
 (deftest sum
   (is (= (d/sum [{:left 1, :right 1}
                  {:left 2, :right 2}])
