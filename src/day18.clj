@@ -22,6 +22,12 @@
       {:left (vec->number left)
        :right (vec->number right)})))
 
+(defn number->vec [number]
+  (if (number? number)
+    number
+    (let [{:keys [left right]} number]
+      [(number->vec left), (number->vec right)])))
+
 (defn read-input []
   (parse-input (slurp "inputs/day18.txt")))
 
