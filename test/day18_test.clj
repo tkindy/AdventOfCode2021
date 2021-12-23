@@ -26,3 +26,6 @@
           {:left {:left 2
                   :right 3}
            :right 6}])))
+
+(deftest part1
+  (is (= (d/part1 example) 4140)))
