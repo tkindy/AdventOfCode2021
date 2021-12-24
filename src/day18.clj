@@ -31,17 +31,29 @@
 (defn read-input []
   (parse-input (slurp "inputs/day18.txt")))
 
-(defn find-reducable [number]
+(defn find-explode [number]
   (letfn [(helper [number path]
             (cond
-              (number? number) (if (>= number 10)
-                                 path
-                                 nil)
+              (number? number) nil
               :else (if (>= (count path) 4)
                       path
                       (or (helper (:left number) (conj path :left))
                           (helper (:right number) (conj path :right))))))]
     (helper number [])))
+
+(defn find-split [number]
+  (letfn [(helper [number path]
+            (cond
+              (number? number) (if (>= number 10)
+                                 path
+                                 nil)
+              :else (or (helper (:left number) (conj path :left))
+                        (helper (:right number) (conj path :right)))))]
+    (helper number [])))
+
+(defn find-reducable [number]
+  (or (find-explode number)
+      (find-split number)))
 
 (defn split [number reduce-path]
   (update-in number
