@@ -144,6 +144,11 @@
           :right {:left 8
                   :right 1}})))
 
+(deftest add
+  (is (= (d/number->vec (d/add (d/vec->number [[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]])
+                               (d/vec->number [7,[[[3,7],[4,3]],[[6,3],[8,8]]]])))
+         [[[[4,0],[5,4]],[[7,7],[6,0]]],[[8,[7,7]],[[7,9],[5,0]]]])))
+
 (deftest sum
   (is (= (d/sum [{:left 1, :right 1}
                  {:left 2, :right 2}])
@@ -185,6 +190,15 @@
                          :right 4}}
           :right {:left 5
                   :right 5}}))
+  (is (= (d/number->vec
+          (d/sum (map d/vec->number
+                      [[1 1]
+                       [2 2]
+                       [3 3]
+                       [4 4]
+                       [5 5]
+                       [6 6]])))
+         [[[[5,0],[7,4]],[5,5]],[6,6]]))
   (is (= (d/sum example)
          {:left {:left {:left {:left 6
                                :right 6}
