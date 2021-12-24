@@ -135,6 +135,10 @@
       sum
       magnitude))
 
+(defn part2 [numbers]
+  0)
+
 (defn -main []
   (let [numbers (read-input)]
-    (println "Part 1:" (part1 numbers))))
+    (println "Part 1:" (part1 numbers))
+    (println "Part 2:" (part2 numbers))))
