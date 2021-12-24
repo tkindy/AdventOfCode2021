@@ -135,8 +135,19 @@
       sum
       magnitude))
 
+(defn all-pairs [numbers]
+  (mapcat (fn [number]
+            (->> numbers
+                 (filter #(not (= number %)))
+                 (map (fn [n2] [number n2]))))
+          numbers))
+
 (defn part2 [numbers]
-  0)
+  (->> numbers
+       all-pairs
+       (map #(apply add %))
+       (map magnitude)
+       (apply max)))
 
 (defn -main []
   (let [numbers (read-input)]
