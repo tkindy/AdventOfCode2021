@@ -106,8 +106,11 @@
 (defn add [n1 n2]
   (reduce-number {:left n1, :right n2}))
 
+(defn sum-steps [numbers]
+  (reductions add numbers))
+
 (defn sum [numbers]
-  (reduce add numbers))
+  (last (sum-steps numbers)))
 
 (defn magnitude [number]
   (if (number? number)
