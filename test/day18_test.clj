@@ -123,6 +123,14 @@
           :right {:left 5
                   :right 5}})))
 
+(deftest reduction-steps
+  (is (= (d/reduction-steps (d/vec->number [[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]))
+         (map d/vec->number (list [[[[0,7],4],[7,[[8,4],9]]],[1,1]]
+                                  [[[[0,7],4],[15,[0,13]]],[1,1]]
+                                  [[[[0,7],4],[[7,8],[0,13]]],[1,1]]
+                                  [[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]
+                                  [[[[0,7],4],[[7,8],[6,0]]],[8,1]])))))
+
 (deftest reduce-number
   (is (= (d/reduce-number {:left {:left {:left {:left {:left 4
                                                        :right 3}

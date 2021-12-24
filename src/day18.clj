@@ -90,11 +90,18 @@
       (split number reduce-path)
       (explode number reduce-path))))
 
+(defn reduction-steps [number]
+  (lazy-seq
+   (let [reduce-path (find-reducable number)]
+     (if (nil? reduce-path)
+       nil
+       (let [next (reduce-once number reduce-path)]
+         (cons next
+               (reduction-steps next)))))))
+
 (defn reduce-number [number]
-  (let [reduce-path (find-reducable number)]
-    (if (nil? reduce-path)
-      number
-      (reduce-number (reduce-once number reduce-path)))))
+  (or (last (reduction-steps number))
+      number))
 
 (defn add [n1 n2]
   (reduce-number {:left n1, :right n2}))
